@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMOBDAY — Sul Fluminense</title>
+<link rel="icon" type="image/png" href="file:///C:/Users/luisg/.cursor/projects/c-Users-luisg-Downloads-landing-imobday/assets/c__Users_luisg_AppData_Roaming_Cursor_User_workspaceStorage_382f47a146bcc4075f86d4d01bd3cb1a_images_Design_sem_nome__25_-3d6bbc7b-abc0-4b97-8488-d5171dcbe069.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Josefin+Sans:wght@200;300;400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --noir:#080808;
+  --white:#f2ede8;
+  --gold:#b8973e;
+  --gold2:#d4b06a;
+  --gold3:#e8cfa0;
+  --dim:#111111;
+  --muted:rgba(242,237,232,0.4);
+  --serif:'Bebas Neue',sans-serif;
+  --display:'Bebas Neue',sans-serif;
+  --sans:'Josefin Sans',sans-serif;
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{background:var(--noir);color:var(--white);font-family:var(--sans);font-size:17px;font-weight:300;overflow-x:hidden;-webkit-font-smoothing:antialiased;touch-action:pan-y}
+
+/* THEMES (alternância: cinza escuro / preto / claro) */
+.theme-black{background:var(--noir);color:var(--white)}
+.theme-dark{background:var(--dim);color:var(--white)}
+.theme-light{
+  --noir:#ffffff;           /* superfícies */
+  --dim:#f3f4f6;            /* cinza claro */
+  --white:#0f1115;          /* texto principal */
+  --muted:rgba(15,17,21,.68);
+  color:var(--white);
+}
+.bg-plain{background:var(--noir)}
+.bg-soft{background:var(--dim)}
+.theme-light .intro-quote{color:rgba(15,17,21,.72);border-left-color:rgba(184,151,62,.65)}
+
+/* Display font (igual arte) */
+.logo-imob,.logo-day,.hero-headline,.intro-title,.s-title,.future-title,.cta-title{font-family:var(--display);font-weight:400;letter-spacing:.02em}
+.logo-day{letter-spacing:.12em}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:98px;
+  min-height:98px;
+  max-height:98px;
+  padding:0 5vw 0 1.4vw;
+  background:rgba(8,8,8,.72);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(184,151,62,.08);
+  transition:background .35s,border-color .35s;
+  overflow-x:clip;
+}
+nav.scrolled{height:98px;min-height:98px;max-height:98px;background:rgba(8,8,8,.9);backdrop-filter:blur(16px);border-bottom:1px solid rgba(184,151,62,.15)}
+.nav-inner{
+  max-width:1320px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;height:100%;
+  gap:1.2rem;
+}
+.logo{display:flex;align-items:center;gap:.2rem;text-decoration:none;line-height:1}
+.logo-imob{font-family:var(--display);font-weight:400;font-size:2.35rem;letter-spacing:.08em;color:var(--white);line-height:1}
+.logo-day{font-family:var(--display);font-weight:400;font-size:2.35rem;letter-spacing:.12em;color:var(--gold2);line-height:1}
+.nav-right{display:flex;align-items:center;gap:1.25rem;flex:0 0 auto;min-width:0}
+.nav-loc{
+  font-family:var(--display);
+  font-size:.94rem;
+  letter-spacing:.22em;
+  color:rgba(242,237,232,.9);
+  text-transform:uppercase;
+}
+.nav-btn{
+  font-family:var(--display);
+  font-size:.9rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--noir);background:var(--gold);
+  padding:.82rem 1.45rem;
+  border-radius:999px;
+  text-decoration:none;
+  transition:background .25s, transform .15s, box-shadow .25s;
+  display:inline-flex;align-items:center;justify-content:center;
+  white-space:nowrap;
+  box-shadow:0 14px 40px rgba(0,0,0,.28);
+}
+.nav-btn:hover{background:var(--gold3)}
+.nav-btn:active{transform:translateY(1px)}
+
+/* NAV MENU (mobile) */
+.nav-burger{
+  display:none;
+  width:46px;height:46px;
+  border-radius:14px;
+  border:1px solid rgba(184,151,62,.25);
+  background:rgba(8,8,8,.25);
+  backdrop-filter:blur(14px);
+  align-items:center;justify-content:center;
+  box-shadow:0 18px 60px rgba(0,0,0,.18);
+  padding:0;
+  cursor:pointer;
+}
+.nav-burger span{
+  display:block;
+  width:22px;height:2px;
+  background:rgba(242,237,232,.92);
+  border-radius:2px;
+}
+.nav-burger span + span{margin-top:6px}
+
+.nav-menu{
+  display:block;
+  position:fixed;
+  left:0;right:0;
+  top:98px;
+  z-index:199;
+  background:rgba(8,8,8,.96);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(184,151,62,.18);
+  padding:1.1rem 5vw;
+  transform:translateY(-6px);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s ease,transform .18s ease;
+}
+.nav-menu-inner{
+  max-width:1320px;margin:0 auto;
+  display:flex;flex-direction:column;gap:1rem;
+}
+.nav-menu-loc{
+  font-family:var(--display);
+  font-size:.95rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:rgba(242,237,232,.92);
+}
+.nav-menu .btn-gold{width:100%}
+
+nav.menu-open .nav-menu{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+@media(max-width:768px){
+  nav{height:76px;min-height:76px;max-height:76px;padding:0 5vw 0 2.4vw}
+  nav.scrolled{height:76px;min-height:76px;max-height:76px}
+  .nav-right{gap:.9rem}
+  .logo-imob,.logo-day{font-size:1.6rem}
+  .nav-loc{font-size:.7rem}
+  .nav-btn{font-size:.64rem;padding:.5rem .9rem}
+
+  /* mostra hamburger no mobile */
+  .nav-burger{display:inline-flex}
+  .nav-menu{top:76px}
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:8.6rem 5vw 6rem;
+  overflow:hidden
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:url('file:///C:/Users/luisg/.cursor/projects/c-Users-luisg-Downloads-landing-imobday/assets/c__Users_luisg_AppData_Roaming_Cursor_User_workspaceStorage_382f47a146bcc4075f86d4d01bd3cb1a_images_hero-bg-42455b82-7331-4076-a1c8-cfecad51e315.png') center/cover no-repeat;
+  transform:none;transition:opacity .4s ease;will-change:auto;
+}
+.hero-bg.loaded{transform:none}
+.hero-veil{position:absolute;inset:0;background:linear-gradient(155deg,rgba(8,8,8,.14) 0%,rgba(8,8,8,.36) 35%,rgba(8,8,8,.72) 72%,rgba(8,8,8,.9) 100%)}
+.hero-content{position:relative;z-index:2;max-width:920px}
+.hero-eyebrow{
+  font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;
+  color:rgba(242,237,232,.96);font-weight:600;margin-bottom:1.6rem;
+  display:flex;align-items:center;gap:.9rem;
+  opacity:0;animation:up .9s .2s ease forwards;
+}
+.hero-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--gold);flex-shrink:0}
+.hero-headline{
+  font-family:var(--serif);font-size:clamp(3.1rem,8.2vw,6.6rem);
+  font-weight:300;line-height:.96;letter-spacing:.01em;
+  margin-bottom:1.5rem;
+  opacity:0;animation:up .9s .35s ease forwards;
+}
+.hero-headline .hero-strong{font-weight:600;color:var(--white)}
+.hero-headline em{font-style:italic;color:var(--gold2);font-weight:300}
+.hero-sub{
+  font-family:var(--display);font-size:clamp(1rem,2vw,1.22rem);
+  font-weight:400;font-style:normal;color:rgba(242,237,232,.82);
+  max-width:700px;line-height:1.7;margin-bottom:3rem;
+  opacity:0;animation:up .9s .5s ease forwards;
+}
+.hero-actions{display:flex;align-items:center;gap:2rem;flex-wrap:wrap;opacity:0;animation:up .9s .65s ease forwards}
+.btn-gold{
+  font-size:.78rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--noir);
+  background:linear-gradient(180deg,var(--gold3) 0%,var(--gold) 100%);
+  border:1px solid rgba(242,237,232,.28);
+  padding:1.12rem 2.6rem;
+  border-radius:999px;
+  text-decoration:none;
+  transition:transform .18s, box-shadow .25s, filter .25s;
+  display:inline-flex;align-items:center;justify-content:center;
+  white-space:nowrap;
+  box-shadow:0 18px 60px rgba(0,0,0,.25), 0 0 0 1px rgba(0,0,0,.08) inset;
+}
+.btn-gold:hover{
+  transform:translateY(-1px);
+  filter:saturate(1.05);
+  box-shadow:0 22px 70px rgba(0,0,0,.28), 0 0 0 1px rgba(0,0,0,.08) inset;
+}
+.btn-gold:focus-visible{
+  outline:2px solid rgba(212,176,106,.85);
+  outline-offset:3px;
+}
+.hero-meta{font-family:var(--display);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.hero-meta span{margin-right:1.2rem}
+.scroll-cue{position:absolute;right:5vw;bottom:3rem;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:fade 1s 1.2s ease forwards}
+.scroll-cue span{font-size:.52rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);writing-mode:vertical-lr}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--gold),transparent);animation:blink 2s ease-in-out infinite}
+
+/* STRIP */
+.strip{
+  position:relative;
+  background:linear-gradient(90deg,#be9a46 0%,#d4b06a 50%,#be9a46 100%);
+  border-top:1px solid rgba(255,255,255,.18);
+  border-bottom:1px solid rgba(0,0,0,.18);
+  padding:1.05rem 0;
+  overflow:hidden;
+  white-space:nowrap;
+  box-shadow:0 10px 30px rgba(0,0,0,.2) inset;
+  width:100%;
+  max-width:100%;
+}
+.strip::before,.strip::after{
+  content:'';
+  position:absolute;
+  top:0;bottom:0;
+  width:84px;
+  z-index:2;
+  pointer-events:none;
+}
+.strip::before{left:0;background:linear-gradient(90deg,rgba(190,154,70,.92),rgba(190,154,70,0))}
+.strip::after{right:0;background:linear-gradient(270deg,rgba(190,154,70,.92),rgba(190,154,70,0))}
+.strip-track{
+  display:inline-flex;
+  gap:0;
+  animation:marquee 26s linear infinite;
+  will-change:transform;
+}
+.strip-item{
+  font-family:var(--display);
+  font-size:1.02rem;
+  font-weight:400;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:rgba(8,8,8,.92);
+  padding:0 2.4rem;
+  display:inline-flex;
+  align-items:center;
+}
+.strip-item::after{
+  content:'✦';
+  color:rgba(8,8,8,.45);
+  margin-left:2.4rem;
+  font-size:.8rem;
+}
+
+/* TWO-COL INTRO */
+.intro{padding:6.2rem 5vw;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;max-width:1320px;margin:0 auto}
+.intro-label{font-size:.82rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.intro-title{font-family:var(--serif);font-size:clamp(2.25rem,5.4vw,4.2rem);font-weight:300;line-height:1.05;margin-bottom:2.2rem}
+.intro-title em{font-style:normal;color:var(--gold2)}
+.intro-quote{font-family:var(--serif);font-size:clamp(1.35rem,2.6vw,1.8rem);font-style:normal;font-weight:300;line-height:1.55;color:rgba(242,237,232,.7);border-left:1px solid var(--gold);padding-left:2rem;margin-bottom:1.4rem}
+.intro-body{font-size:1.14rem;line-height:1.72;letter-spacing:.015em;color:var(--muted)}
+.intro-body p+p{margin-top:.9rem}
+.intro-visual{margin-top:1.6rem;border-radius:18px;overflow:hidden;border:1px solid rgba(184,151,62,.25);box-shadow:0 20px 60px rgba(0,0,0,.22)}
+.intro-visual img{display:block;width:100%;height:auto;object-fit:contain;object-position:center;background:transparent}
+
+/* GENERIC SECTION */
+.s{padding:5.2rem 5vw}
+.s-inner{max-width:1320px;margin:0 auto}
+.s-label{font-size:.82rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.s-title{font-family:var(--serif);font-size:clamp(2.2rem,4.9vw,3.8rem);font-weight:300;line-height:1.08;margin-bottom:1.4rem}
+.s-title em{font-style:normal;color:var(--gold2)}
+.s-body{font-size:1.14rem;line-height:1.72;letter-spacing:.015em;color:var(--muted);max-width:700px}
+.s-dark{background:var(--dim)}
+
+/* 2-COL GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(184,151,62,.1);margin-top:2.8rem}
+.g2c{padding:2rem 2.2rem;background:var(--noir)}
+.s-dark .g2c{background:var(--dim)}
+.g2c h4{font-family:var(--sans);font-size:.88rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:var(--gold);margin-bottom:.65rem}
+.g2c p{font-size:1.08rem;line-height:1.62;letter-spacing:.012em;color:var(--muted)}
+
+/* AUDIENCE */
+.aud{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid rgba(184,151,62,.1);margin-top:2.5rem}
+.aud-cell{padding:1.1rem 1.4rem;border-right:1px solid rgba(184,151,62,.1);border-bottom:1px solid rgba(184,151,62,.1);display:flex;align-items:center;gap:.7rem;transition:background .2s}
+.aud-cell:hover{background:rgba(184,151,62,.05)}
+.aud-cell:nth-child(3n){border-right:none}
+.aud-dot{width:4px;height:4px;background:var(--gold);border-radius:50%;flex-shrink:0}
+.aud-cell span{font-size:1rem;letter-spacing:.08em;text-transform:uppercase;font-weight:400;color:rgba(242,237,232,.72)}
+
+/* TOPICS */
+.topics{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;background:rgba(184,151,62,.18);margin-top:2.8rem}
+.topic{padding:2rem 1.9rem 2.3rem;background:var(--dim);position:relative;overflow:hidden;transition:background .3s}
+.topic::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .45s ease}
+.topic:hover{background:rgba(184,151,62,.04)}
+.topic:hover::after{transform:scaleX(1)}
+.topic-n{font-family:var(--serif);font-size:3.2rem;font-weight:300;color:rgba(184,151,62,.85);line-height:1;margin-bottom:1.1rem;display:block;text-shadow:0 10px 30px rgba(0,0,0,.35)}
+.topic h3{font-family:var(--serif);font-size:1.65rem;font-weight:400;margin-bottom:.55rem;line-height:1.18;color:var(--white)}
+.topic p{font-size:1.08rem;line-height:1.6;letter-spacing:.012em;color:var(--muted)}
+
+/* ECO */
+.eco-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(184,151,62,.1);margin-top:2.8rem}
+.eco{padding:2rem;background:var(--noir);text-align:center;transition:background .3s}
+.eco:hover{background:rgba(184,151,62,.04)}
+.eco-n{font-family:var(--serif);font-style:normal;font-size:2rem;font-weight:300;color:var(--gold);display:block;margin-bottom:.5rem}
+.eco h4{font-size:.94rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--white);margin-bottom:.35rem}
+.eco p{font-size:1.04rem;color:var(--muted);line-height:1.52;letter-spacing:.012em}
+
+/* DIFF */
+.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.8rem 4.2rem;margin-top:2.8rem}
+.diff-item{border-top:1px solid rgba(184,151,62,.3);padding-top:1.8rem}
+.diff-item h3{font-family:var(--serif);font-size:1.45rem;font-weight:400;margin-bottom:.65rem}
+.diff-item p{font-size:1.1rem;line-height:1.62;letter-spacing:.012em;color:var(--muted)}
+
+/* TAGS */
+.tags{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:1.8rem;justify-content:center}
+.tag{font-size:.84rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;border:1px solid var(--gold);padding:.58rem 1.25rem;color:var(--gold2);transition:all .25s;cursor:default}
+.tag:hover{border-color:var(--gold3);color:var(--gold3);background:rgba(184,151,62,.08)}
+
+/* FUTURE */
+.future{padding:6.5rem 5vw;text-align:center;position:relative;overflow:hidden}
+.future::before{content:'';position:absolute;bottom:-10%;left:50%;transform:translateX(-50%);width:700px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(184,151,62,.05) 0%,transparent 65%);pointer-events:none}
+.future-inner{max-width:840px;margin:0 auto;position:relative;z-index:1}
+.future-title{font-family:var(--serif);font-size:clamp(2.65rem,6.8vw,5.9rem);font-weight:300;line-height:1.02;margin:1rem 0 2rem}
+.future-title em{font-style:normal;color:var(--gold2)}
+.future-lines{display:flex;flex-direction:column;gap:.2rem;align-items:center;margin-bottom:2rem}
+.future-lines p{font-family:var(--serif);font-size:clamp(1.45rem,3.2vw,2.45rem);font-weight:300}
+.future-lines p:nth-child(1){color:rgba(242,237,232,.9)}
+.future-lines p:nth-child(2){color:rgba(242,237,232,.5);font-style:normal}
+.future-lines p:nth-child(3){color:var(--gold2);font-style:normal}
+
+/* CTA */
+.cta-final{position:relative;padding:7rem 5vw;text-align:center;overflow:hidden}
+.cta-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1400&q=70') center 60%/cover no-repeat;filter:brightness(.16) saturate(.25)}
+.cta-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,8,.65) 0%,rgba(8,8,8,.3) 50%,rgba(8,8,8,.75) 100%)}
+.cta-inner{position:relative;z-index:2;max-width:680px;margin:0 auto}
+.cta-title{font-family:var(--serif);font-size:clamp(2.35rem,5.9vw,4.7rem);font-weight:300;line-height:1.08;margin:1.3rem 0 1.5rem}
+.cta-title em{font-style:normal;color:var(--gold2)}
+.cta-body{font-size:1.14rem;line-height:1.72;letter-spacing:.015em;color:rgba(242,237,232,.7);margin-bottom:1.8rem}
+.cta-meta{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;font-size:.9rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(242,237,232,.58);margin-bottom:2rem}
+.btn-lg{
+  font-size:.96rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--noir);
+  background:linear-gradient(180deg,var(--gold) 0%,var(--gold2) 100%);
+  border:1px solid rgba(242,237,232,.22);
+  padding:1.05rem 2.7rem;
+  text-decoration:none;
+  transition:transform .18s, box-shadow .25s, filter .25s;
+  display:inline-flex;align-items:center;justify-content:center;
+  border-radius:999px;
+  box-shadow:0 18px 60px rgba(0,0,0,.24), 0 0 0 1px rgba(0,0,0,.08) inset;
+}
+.btn-lg:hover{
+  transform:translateY(-1px);
+  filter:saturate(1.05);
+  box-shadow:0 22px 70px rgba(0,0,0,.28), 0 0 0 1px rgba(0,0,0,.08) inset;
+}
+.btn-lg:focus-visible{
+  outline:2px solid rgba(212,176,106,.85);
+  outline-offset:3px;
+}
+
+/* FOOTER */
+footer{background:var(--noir);border-top:1px solid rgba(184,151,62,.1);padding:1.8rem 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.f-logo span:first-child{font-family:var(--sans);font-weight:600;font-size:1.16rem;letter-spacing:.12em;color:var(--white)}
+.f-logo span:last-child{font-family:var(--sans);font-weight:200;font-size:1.16rem;letter-spacing:.28em;color:var(--gold)}
+footer p{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(242,237,232,.3)}
+
+/* ANIMATIONS */
+@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .85s ease,transform .85s ease}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.12s}.d2{transition-delay:.24s}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .intro{grid-template-columns:1fr;gap:2.5rem;padding:4rem 5vw}
+  .topics{grid-template-columns:1fr 1fr}
+  .eco-wrap{grid-template-columns:1fr 1fr}
+  .intro-visual img{height:auto;object-fit:contain;object-position:center}
+}
+@media(max-width:768px){
+  .nav-loc{display:none}
+  .g2,.topics,.eco-wrap,.diff-grid{grid-template-columns:1fr}
+  .aud{grid-template-columns:1fr 1fr}
+  .aud-cell:nth-child(3n){border-right:1px solid rgba(184,151,62,.1)}
+  .aud-cell:nth-child(even){border-right:none}
+  .scroll-cue{display:none}
+  .strip{padding:.82rem 0}
+  .strip-item{font-size:.74rem;padding:0 1.5rem}
+  .strip-item::after{margin-left:1.5rem;font-size:.68rem}
+
+  /* HERO MOBILE */
+  .hero{padding:6.2rem 5vw 3.2rem}
+  .hero-content{max-width:unset}
+  .hero-eyebrow{font-size:.64rem;letter-spacing:.22em;margin-bottom:1.2rem}
+  .hero-sub{margin-bottom:1.9rem;max-width:unset}
+  .hero-actions{gap:1.2rem}
+  .btn-gold{padding:.95rem 1.6rem;font-size:.72rem}
+  .hero-meta{font-size:.66rem;letter-spacing:.18em}
+
+  /* SEÇÕES MAIS COMPACAS */
+  .s{padding:4.1rem 5vw}
+  .future{padding:4.6rem 5vw}
+  .cta-final{padding:5.2rem 5vw}
+  footer{padding:1.4rem 5vw}
+
+  /* CARDS / GRELHAS */
+  .g2c{padding:1.6rem 1.6rem}
+  .topic{padding:1.65rem 1.35rem 2rem}
+  .topic-n{font-size:2.55rem;margin-bottom:.75rem}
+  .topic h3{font-size:1.28rem}
+  .topic p{font-size:1.02rem}
+  .eco{padding:1.65rem}
+  .eco h4{font-size:.84rem}
+  .eco p{font-size:1rem}
+  .diff-grid{gap:2.4rem 2.6rem}
+  .diff-item h3{font-size:1.22rem}
+  .diff-item p{font-size:1.03rem}
+
+  .aud-cell{padding:1.05rem 1.1rem}
+  .aud-cell span{font-size:.92rem}
+
+  .tag{font-size:.82rem;padding:.55rem 1.05rem}
+  .tags{margin-top:1.4rem;gap:.5rem}
+
+  .cta-meta{gap:1rem;margin-bottom:1.7rem;font-size:.88rem}
+  .btn-lg{padding:.9rem 2rem;font-size:.86rem}
+}
+@media(max-width:480px){
+  .aud{grid-template-columns:1fr}
+  .aud-cell:nth-child(even){border-right:none}
+  .aud-cell:nth-child(odd){border-right:none}
+  .hero{padding:5.7rem 5vw 2.7rem}
+  .hero-eyebrow{font-size:.62rem;margin-bottom:1.05rem}
+  .hero-headline{font-size:clamp(2.1rem,8.2vw,2.85rem);line-height:.94;margin-bottom:1.15rem}
+  .hero-sub{font-size:clamp(.95rem,2.4vw,1.04rem);margin-bottom:1.8rem}
+
+  .hero-actions{flex-direction:column;align-items:stretch}
+  .btn-gold{width:100%}
+  .hero-meta span{margin-right:0}
+
+  .intro{gap:2rem}
+  .intro-visual{margin-top:1rem}
+
+  .strip-item{padding:0 1.1rem}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a class="logo" href="#"><span class="logo-imob">IMOB</span><span class="logo-day">DAY</span></a>
+    <div class="nav-right">
+      <span class="nav-loc">Sul Fluminense · RJ</span>
+      <button class="nav-burger" id="navBurger" aria-label="Abrir menu" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-menu" id="navMenu" aria-hidden="true">
+    <div class="nav-menu-inner">
+      <div class="nav-menu-loc">Sul Fluminense · RJ</div>
+      <a href="#cta" class="btn-gold">Quero participar</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-veil"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Sul Fluminense — Rio de Janeiro</p>
+    <h1 class="hero-headline"><span class="hero-strong">O Encontro<br>Estratégico do</span><br><em>Mercado Imobiliário</em></h1>
+    <p class="hero-sub">Um evento exclusivo que reúne empresários, investidores, incorporadores e profissionais que estão construindo o futuro do setor.</p>
+    <div class="hero-actions">
+      <a href="#cta" class="btn-gold">Garantir minha participação</a>
+      <div class="hero-meta"><span>📍 Sul Fluminense</span><span>📅 09 de abril</span></div>
+    </div>
+  </div>
+  <div class="scroll-cue"><div class="scroll-line"></div><span>Rolar</span></div>
+</section>
+
+<!-- STRIP -->
+<div class="strip" aria-hidden="true">
+  <div class="strip-track">
+    <span class="strip-item">Construção</span><span class="strip-item">Captação de recursos</span><span class="strip-item">Tokenização</span><span class="strip-item">Incorporação</span><span class="strip-item">Inovação</span><span class="strip-item">Networking estratégico</span><span class="strip-item">Estruturação de negócios</span><span class="strip-item">Sul Fluminense</span>
+    <span class="strip-item">Construção</span><span class="strip-item">Captação de recursos</span><span class="strip-item">Tokenização</span><span class="strip-item">Incorporação</span><span class="strip-item">Inovação</span><span class="strip-item">Networking estratégico</span><span class="strip-item">Estruturação de negócios</span><span class="strip-item">Sul Fluminense</span>
+  </div>
+</div>
+
+<!-- EXPANSÃO -->
+<section class="theme-light bg-plain">
+  <div class="intro">
+    <div class="reveal">
+      <p class="intro-label">Nova edição</p>
+      <h2 class="intro-title">O IMOBDAY<br>chega ao<br><em>Sul Fluminense</em></h2>
+      <a href="#cta" class="btn-gold">Quero participar</a>
+      <div class="intro-visual reveal d1">
+        <img src="file:///C:/Users/luisg/.cursor/projects/c-Users-luisg-Downloads-landing-imobday/assets/c__Users_luisg_AppData_Roaming_Cursor_User_workspaceStorage_382f47a146bcc4075f86d4d01bd3cb1a_images_WhatsApp_Image_2026-03-26_at_17.38.23-e7051c3a-4f89-4ff1-8a9d-627e285b62f5.png" alt="Imagem do IMOBDAY para a seção Nova edição">
+      </div>
+    </div>
+    <div class="reveal d1">
+      <blockquote class="intro-quote">"Depois de uma primeira edição de grande sucesso no Rio de Janeiro, realizada no tradicional Gávea Golf Club, o IMOBDAY segue expandindo."</blockquote>
+      <div class="intro-body">
+        <p>Agora levamos essa experiência para uma das regiões que mais cresce no estado: o Sul Fluminense. A região vive um momento estratégico de desenvolvimento, com expansão urbana, novos investimentos e oportunidades imobiliárias surgindo em diferentes cidades.</p>
+        <p>O IMOBDAY chega ao Sul Fluminense com o objetivo de conectar empresários, investidores e profissionais do setor, criando um ambiente para discutir oportunidades, inovação e os novos caminhos do mercado imobiliário.</p>
+        <p>Será um encontro pensado para quem deseja entender o potencial da região e participar ativamente dos próximos movimentos do mercado. O Sul Fluminense agora passa a fazer parte do mapa do IMOBDAY.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSFORMAÇÃO -->
+<section class="s theme-dark">
+  <div class="s-inner">
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:end;margin-bottom:0">
+      <div><p class="s-label">O cenário atual</p><h2 class="s-title">O mercado imobiliário<br>está <em>mudando</em></h2></div>
+      <p class="s-body" style="padding-bottom:.4rem">Durante décadas o mercado imobiliário operou praticamente da mesma forma. Hoje, novos modelos de estruturação, financiamento e desenvolvimento estão surgindo. No IMOBDAY vamos discutir os temas que já estão moldando o futuro do setor.</p>
+    </div>
+    <div class="g2 reveal">
+      <div class="g2c"><h4>Captação de recursos</h4><p>Novas formas de levantar capital para projetos imobiliários, além dos modelos tradicionais que dominaram o setor por décadas.</p></div>
+      <div class="g2c"><h4>Estruturação inteligente</h4><p>Como estruturar empreendimentos com mais inteligência financeira, menor risco e maior atratividade para investidores.</p></div>
+      <div class="g2c"><h4>Tokenização de ativos</h4><p>Digitalização que abre novos modelos de investimento imobiliário e democratiza o acesso a grandes projetos.</p></div>
+      <div class="g2c"><h4>Tecnologia aplicada</h4><p>Inovação transformando o desenvolvimento, a gestão e a comercialização de empreendimentos em todo o país.</p></div>
+      <div class="g2c"><h4>Desenvolvimento estratégico</h4><p>Desenvolvimento imobiliário com visão de longo prazo, posicionamento competitivo e análise aprofundada de mercado.</p></div>
+      <div class="g2c"><h4>Novos modelos de incorporação</h4><p>Formatos inovadores que estão redefinindo a estrutura tradicional das incorporações e criando novas oportunidades.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PÚBLICO -->
+<section class="s theme-black">
+  <div class="s-inner">
+    <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-bottom:0">
+      <div><p class="s-label">Público do evento</p><h2 class="s-title">Para quem<br>é o <em>IMOBDAY</em></h2></div>
+      <p class="s-body" style="padding-top:2.5rem">O IMOBDAY foi pensado para quem atua ou quer atuar no nível estratégico do mercado imobiliário. Se você quer entender como estruturar oportunidades imobiliárias mais rentáveis, este evento é para você.</p>
+    </div>
+    <div class="aud reveal">
+      <div class="aud-cell"><div class="aud-dot"></div><span>Incorporadores</span></div>
+      <div class="aud-cell"><div class="aud-dot"></div><span>Construtores</span></div>
+      <div class="aud-cell"><div class="aud-dot"></div><span>Donos de terrenos</span></div>
+      <div class="aud-cell"><div class="aud-dot"></div><span>Investidores</span></div>
+      <div class="aud-cell"><div class="aud-dot"></div><span>Loteadores</span></div>
+      <div class="aud-cell"><div class="aud-dot"></div><span>Empresários do setor</span></div>
+      <div class="aud-cell"><div class="aud-dot"></div><span>Corretores estratégicos</span></div>
+      <div class="aud-cell"><div class="aud-dot"></div><span>Gestores imobiliários</span></div>
+      <div class="aud-cell"><div class="aud-dot"></div><span>Profissionais de networking</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TÓPICOS -->
+<section class="s theme-light bg-soft">
+  <div class="s-inner">
+    <div class="reveal"><p class="s-label">Programação</p><h2 class="s-title">O que será discutido<br>no <em>evento</em></h2></div>
+    <div class="topics reveal">
+      <div class="topic"><span class="topic-n">01</span><h3>Estruturação imobiliária moderna</h3><p>Como estruturar projetos com mais inteligência financeira e menor exposição ao risco operacional.</p></div>
+      <div class="topic"><span class="topic-n">02</span><h3>Captação de recursos para empreendimentos</h3><p>Novas formas de levantar capital para projetos imobiliários além dos modelos tradicionais.</p></div>
+      <div class="topic"><span class="topic-n">03</span><h3>Oportunidades em terrenos estratégicos</h3><p>Como identificar ativos com alto potencial de valorização e transformá-los em oportunidades reais.</p></div>
+      <div class="topic"><span class="topic-n">04</span><h3>Tokenização e digitalização imobiliária</h3><p>Como a tecnologia está permitindo novos modelos de investimento e democratizando o acesso.</p></div>
+      <div class="topic"><span class="topic-n">05</span><h3>Estruturação de projetos e ofertas</h3><p>Como transformar terrenos e ativos em oportunidades estruturadas para investidores qualificados.</p></div>
+      <div class="topic"><span class="topic-n">06</span><h3>Potencial do Sul Fluminense</h3><p>Panorama estratégico do desenvolvimento imobiliário na região e as oportunidades emergentes.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ECOSSISTEMA -->
+<section class="s theme-dark">
+  <div class="s-inner">
+    <div class="reveal"><p class="s-label">Ecossistema</p><h2 class="s-title">O que estamos<br>construindo no <em>mercado</em></h2><p class="s-body">Um ecossistema completo conectando capital, oportunidades e tecnologia de forma mais eficiente.</p></div>
+    <div class="eco-wrap reveal">
+      <div class="eco"><span class="eco-n">I</span><h4>Análise de terrenos</h4><p>Identificação de ativos com potencial estratégico</p></div>
+      <div class="eco"><span class="eco-n">II</span><h4>Estruturação</h4><p>Formatação inteligente de empreendimentos</p></div>
+      <div class="eco"><span class="eco-n">III</span><h4>Captação</h4><p>Conexão entre capital e oportunidades reais</p></div>
+      <div class="eco"><span class="eco-n">IV</span><h4>Tecnologia</h4><p>Soluções digitais para o mercado imobiliário</p></div>
+      <div class="eco"><span class="eco-n">V</span><h4>Tokenização</h4><p>Digitalização e novos modelos de investimento</p></div>
+      <div class="eco"><span class="eco-n">VI</span><h4>Vendas</h4><p>Soluções para distribuição e comercialização</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="s theme-black">
+  <div class="s-inner">
+    <div class="reveal"><p class="s-label">Por que o IMOBDAY</p><h2 class="s-title">O que torna o<br>IMOBDAY <em>único</em></h2></div>
+    <div class="diff-grid reveal">
+      <div class="diff-item"><h3>Ambiente premium</h3><p>Um encontro pensado para gerar conexões de alto nível, com curadoria de participantes e ambiente que favorece conversas de qualidade.</p></div>
+      <div class="diff-item"><h3>Conteúdo estratégico</h3><p>Insights reais sobre estruturação, investimento e inovação no setor imobiliário — sem superficialidade, focado no que importa.</p></div>
+      <div class="diff-item"><h3>Networking qualificado</h3><p>Conexões que geram parcerias, investimentos e novos projetos com perfis complementares ao seu negócio.</p></div>
+      <div class="diff-item"><h3>Visão de futuro</h3><p>Discussões sobre os novos modelos que estão surgindo no mercado e como se posicionar para aproveitá-los.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIÊNCIA -->
+<section class="s theme-light bg-plain" style="text-align:center">
+  <div class="s-inner reveal">
+    <p class="s-label">Formato</p>
+    <h2 class="s-title" style="margin:0 auto 1rem">Experiência do <em>evento</em></h2>
+    <p class="s-body" style="margin:0 auto">Mais do que um evento, um ambiente para gerar negócios e novas oportunidades reais.</p>
+    <div class="tags">
+      <span class="tag">Palestras</span><span class="tag">Painéis de discussão</span><span class="tag">Apresentações de soluções</span><span class="tag">Networking qualificado</span><span class="tag">Troca de experiências</span>
+    </div>
+  </div>
+</section>
+
+<!-- FUTURO -->
+<section class="future theme-dark">
+  <div class="future-inner">
+    <p class="s-label reveal">O próximo ciclo</p>
+    <h2 class="future-title reveal">O futuro do<br><em>mercado imobiliário</em></h2>
+    <div class="future-lines reveal">
+      <p>Mais tecnologia.</p><p>Mais inteligência financeira.</p><p>Mais conexão entre ativos e capital.</p>
+    </div>
+    <p class="s-body reveal" style="margin:0 auto;text-align:center">Quem entender esse movimento primeiro estará na frente nos próximos anos. O IMOBDAY foi criado para reunir as pessoas que querem construir esse futuro.</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-final" id="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-overlay"></div>
+  <div class="cta-inner">
+    <p class="s-label">Faça parte</p>
+    <h2 class="cta-title">Garanta sua<br>participação no <em>IMOBDAY</em></h2>
+    <p class="cta-body">Faça parte de um encontro que conecta empresários, investidores e profissionais que estão transformando o mercado imobiliário do Sul Fluminense e do Brasil.</p>
+    <div class="cta-meta"><span>📍 Sul Fluminense – RJ</span><span>📅 09 de abril</span></div>
+    <a href="#" class="btn-lg">Quero participar do IMOBDAY</a>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo"><span>IMOB</span><span>DAY</span></div>
+  <p>Sul Fluminense · Rio de Janeiro</p>
+  <p>© 2026 IMOBDAY. Todos os direitos reservados.</p>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>50),{passive:true});
+// Mobile menu (hamburger)
+const burger=document.getElementById('navBurger');
+const menu=document.getElementById('navMenu');
+const closeMenu=()=>{
+  nav.classList.remove('menu-open');
+  if(burger) burger.setAttribute('aria-expanded','false');
+  if(menu) menu.setAttribute('aria-hidden','true');
+};
+if(burger && menu){
+  burger.addEventListener('click',()=>{
+    const isOpen=nav.classList.toggle('menu-open');
+    burger.setAttribute('aria-expanded',String(isOpen));
+    menu.setAttribute('aria-hidden',String(!isOpen));
+  });
+  // Fecha ao clicar em links dentro do menu
+  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+  document.addEventListener('keydown',(e)=>{if(e.key==='Escape') closeMenu()});
+}
+const bg=document.getElementById('heroBg');
+const img=new Image();
+img.src='file:///C:/Users/luisg/.cursor/projects/c-Users-luisg-Downloads-landing-imobday/assets/c__Users_luisg_AppData_Roaming_Cursor_User_workspaceStorage_382f47a146bcc4075f86d4d01bd3cb1a_images_hero-bg-42455b82-7331-4076-a1c8-cfecad51e315.png';
+img.onload=()=>bg.classList.add('loaded');
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// Fix audience bottom border
+const cells=[...document.querySelectorAll('.aud-cell')];
+const cols=window.innerWidth>480?3:1;
+cells.slice(-cols).forEach(c=>c.style.borderBottom='none');
+</script>
+</body>
+</html>
